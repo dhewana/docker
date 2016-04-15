@@ -75,7 +75,7 @@ RUN set -xe \
         wget \
         xz-utils \
         " \
-        && apt-get update && apt-get install -y $buildDeps && rm -rf /var/lib/apt/lists/* \
+        && apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
         && curl -fSL "http://php.net/get/$PHP_FILENAME/from/this/mirror" -o "$PHP_FILENAME" \
         && echo "$PHP_SHA256 *$PHP_FILENAME" | sha256sum -c - \
         && curl -fSL "http://php.net/get/$PHP_FILENAME.asc/from/this/mirror" -o "$PHP_FILENAME.asc" \
@@ -95,8 +95,8 @@ RUN set -xe \
         && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
         && make clean \
         && pecl install imagick memcached redis \
-        && docker-php-ext-enable imagick memcached redis
-#       && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false $buildDeps
+        && docker-php-ext-enable imagick memcached redis \
+        && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false autoconf build-essential ca-certificates curl file g++ gcc make mcrypt php-pear php5-dev pkg-config re2c wget xz-utils
 
 WORKDIR /var/www/html
 
