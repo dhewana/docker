@@ -1,5 +1,5 @@
 nginx:
-  container_name: knginx
+  container_name: my_nginx
   image: nginx:1.8
   ports:
     - "80:80"
@@ -7,25 +7,25 @@ nginx:
     - phpfpm
     - mysql
   volumes:
-    - /home/bella/kurio/conf/nginx.conf:/etc/nginx/nginx.conf
-    - /home/bella/kurio/conf/conf.d:/etc/nginx/conf.d
-    - /home/bella/kurio/kurio.co.id/public:/var/www/html
-    - /home/bella/kurio/logs:/var/log/nginx
+    - /home/user/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+    - /home/user/nginx/conf/conf.d:/etc/nginx/conf.d
+    - /home/user/www/public:/var/www/html
+    - /home/user/nginx/logs:/var/log/nginx
   restart: always
 
 phpfpm:
-  container_name: kphpfpm
+  container_name: my_phpfpm
   image: dhewana/php-fpm:5.6
   links:
     - memcached
     - redis
     - beanstalk
   volumes:
-    - /home/bella/kurio/kurio.co.id/public:/var/www/html
+    - /home/user/www/public:/var/www/html
   restart: always
 
 memcached:
-  container_name: kmemcached
+  container_name: my_memcached
   image: memcached
   command:
 #    - -d
@@ -37,22 +37,22 @@ memcached:
   restart: always
 
 redis:
-  container_name: kredis
+  container_name: my_redis
   image: redis:3.0.7
   restart: always
 
 beanstalk:
-  container_name: kbeanstalk
+  container_name: my_beanstalk
   image: dhewana/beanstalk
   restart: always
 
 mysql:
-  container_name: kmysql
+  container_name: my_mysql
   image: mysql:5.6
   ports:
     - "3306:3306"
   environment:
-    - MYSQL_ROOT_PASSWORD=TheKuri0./
+    - MYSQL_ROOT_PASSWORD=<password>
   volumes:
     - /var/lib/mysql:/var/lib/mysql
   restart: always
