@@ -12,7 +12,7 @@ nginx:
   restart: always
 
 php:
-  image: dhewana/php-fpm-4:5.6
+  image: dhewana/php-fpm:5.6
   links:
     - memcached
     - redis
