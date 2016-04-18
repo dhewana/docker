@@ -1,27 +1,31 @@
 nginx:
+  container_name: knginx
   image: nginx:1.8
   ports:
     - "80:80"
   links:
-    - php:fpm
+    - phpfpm
+    - mysql
   volumes:
-    - /home/dhewana/conf/nginx.conf:/etc/nginx/nginx.conf
-    - /home/dhewana/conf/conf.d:/etc/nginx/conf.d
-    - /home/dhewana/www/public:/var/www/html
-    - /home/dhewana/logs:/var/log/nginx
+    - /home/bella/kurio/conf/nginx.conf:/etc/nginx/nginx.conf
+    - /home/bella/kurio/conf/conf.d:/etc/nginx/conf.d
+    - /home/bella/kurio/kurio.co.id/public:/var/www/html
+    - /home/bella/kurio/logs:/var/log/nginx
   restart: always
 
-php:
+phpfpm:
+  container_name: kphpfpm
   image: dhewana/php-fpm:5.6
   links:
     - memcached
     - redis
     - beanstalk
   volumes:
-    - /home/dhewana/www/public:/var/www/html
+    - /home/bella/kurio/kurio.co.id/public:/var/www/html
   restart: always
 
 memcached:
+  container_name: kmemcached
   image: memcached
   command:
 #    - -d
@@ -33,9 +37,22 @@ memcached:
   restart: always
 
 redis:
+  container_name: kredis
   image: redis:3.0.7
   restart: always
 
 beanstalk:
+  container_name: kbeanstalk
   image: dhewana/beanstalk
+  restart: always
+
+mysql:
+  container_name: kmysql
+  image: mysql:5.6
+  ports:
+    - "3306:3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=TheKuri0./
+  volumes:
+    - /var/lib/mysql:/var/lib/mysql
   restart: always
