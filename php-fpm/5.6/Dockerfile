@@ -28,8 +28,7 @@ ENV PHP_EXTRA_CONFIGURE_ARGS \
         --enable-ftp \
         --with-openssl \
         --with-mcrypt \
-        --enable-zip \
-        --with-mysql
+        --enable-zip
 
 ENV GPG_KEYS 0BD78B5F97500D450838F95DFE857D9A90D90EC1 6E4F6AB321FDC07F2C332E3AC2BF0BC433CFC8B3
 
