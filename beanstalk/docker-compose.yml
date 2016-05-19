@@ -1,0 +1,4 @@
+beanstalk:
+  container_name: my_beanstalk
+  image: dhewana/beanstalk
+  restart: always
