@@ -95,7 +95,7 @@ RUN set -xe \
         && make install \
         && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
         && make clean \
-        && pecl install imagick memcached redis \
+        && pecl install imagick memcached redis mongodb \
         && docker-php-ext-enable imagick memcached redis \
         && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false autoconf build-essential ca-certificates curl file g++ gcc make mcrypt php-pear php5-dev pkg-config re2c wget xz-utils
 
