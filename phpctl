@@ -1,0 +1,23 @@
+#!/bin/sh
+
+ARGV="$@"
+
+if [ "x$ARGV" = "x" ] ; then
+	exec echo "usage: $0 start|stop|restart"
+fi
+
+if [ "x$ARGV" = "xrestart" ] ; then
+        kill -2 $(cat /var/run/php-fpm.pid)  &
+	sleep 1;
+        ARGV=start
+fi
+
+if [ "x$ARGV" = "xstart" ] ; then
+	exec $PHP_FPM -d $PHP_CONF &
+	exit
+fi
+
+if [ "x$ARGV" = "xstop" ] ; then
+        kill -2 $(cat /var/run/php-fpm.pid)  &
+        exit
+fi
