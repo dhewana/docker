@@ -1,0 +1,7 @@
+#!/bin/sh
+
+export NGINX_CONF=/path/nginx/conf/nginx.conf
+export NGINX=/path/nginx/sbin/nginx
+
+#-------------------
+exec /path/nginx/sbin/ngctl $@
