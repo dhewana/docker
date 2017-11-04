@@ -1,0 +1,26 @@
+#!/bin/sh
+
+ARGV="$@"
+
+if [ "x$ARGV" = "x" ] ; then
+	exec echo "usage: $0 start|stop|restart|configtest|reload|reopen|quit"
+fi
+
+if [ "x$ARGV" = "xrestart" ] ; then
+        $NGINX -c $NGINX_CONF -s stop  &
+	sleep 1;
+        ARGV=start
+fi
+
+if [ "x$ARGV" = "xconfigtest" ] ; then
+	exec $NGINX -c $NGINX_CONF -t &
+	exit
+fi
+
+if [ "x$ARGV" = "xstart" ] ; then
+	exec $NGINX -c $NGINX_CONF &
+	exit
+fi
+
+#stop, quit, reopen, reload
+exec $NGINX -c $NGINX_CONF -s $ARGV &
